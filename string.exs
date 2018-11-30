@@ -43,5 +43,19 @@ defmodule MyString do
   defp parse_op( [?- | tail] ), do: {&(&1 - &2), tail}
   defp parse_op( [?* | tail] ), do: {&(&1 * &2), tail}
   defp parse_op( [?/ | tail] ), do: {&(div(&1, &2)), tail}
-
+  
+  def center(list) do
+    block_length = list
+    |> Enum.map( fn x -> String.length(x) end )
+    |> Enum.max
+    
+    Enum.each( list, fn(x) -> IO.puts _print_line(block_length, x) end )
+  end
+  
+  defp _print_line(block_length, line) do
+    padding = div(block_length - String.length(line), 2) + String.length(line)
+    
+    String.pad_leading( line, padding )
+  end
+  
 end
