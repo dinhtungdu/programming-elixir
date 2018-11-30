@@ -58,4 +58,12 @@ defmodule MyString do
     String.pad_leading( line, padding )
   end
   
+  
+  def capitalize_sentences( str) do
+    str
+    |> String.split(". ")
+    |> Enum.map( &(String.capitalize(&1)) )
+    |> Enum.join( ". " )
+  end
+  
 end
