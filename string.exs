@@ -59,11 +59,28 @@ defmodule MyString do
   end
   
   
-  def capitalize_sentences( str) do
+  def capitalize_sentences( str ) do
     str
     |> String.split(". ")
     |> Enum.map( &(String.capitalize(&1)) )
     |> Enum.join( ". " )
   end
   
+  
+  def parse_csv( file ) do
+    parsed_list = File.read!(file)
+                  |> String.split("\n")
+                  
+    keyword = List.first(parsed_list)
+              |> String.split(",")
+              |> Enum.map(&(String.to_atom(&1)))
+              
+    List.delete_at(parsed_list, 0)
+    |> Enum.map(&(_process_line(keyword, &1)))
+    
+  end
+  defp _process_line(keyword, str) do
+    list = String.split(str, ",")
+    Enum.zip(keyword, list)
+  end
 end
